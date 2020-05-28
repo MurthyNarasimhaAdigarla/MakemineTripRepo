@@ -2,11 +2,9 @@ package stepdefs.com;
 
 import cucumber.api.java.en.Given;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import utils.com.MakemyTrip_Utils;
 
@@ -17,10 +15,15 @@ public class MakeMyTrip_Steps extends MakemyTrip_Utils {
 
 
     @Given("^I login website as a guest user$")
+
     public void i_login_website_as_a_guest_user() throws Throwable {
 
         System.setProperty("webdriver.chrome.driver", "src/test/java/chromedriver.exe");
         driver = new ChromeDriver();
+
+       /* System.setProperty("webdriver.gecko.driver",
+                "src/test/java/geckodriver.exe");
+        driver = new FirefoxDriver();*/
 
         driver.get("https://www.makemytrip.com/");
         driver.manage().window().maximize();
@@ -28,6 +31,7 @@ public class MakeMyTrip_Steps extends MakemyTrip_Utils {
         driver.findElement(By.xpath("//*[@id='SW']/div[2]/div[2]/div/div/nav/ul/li[1]/a/span[2]")).click();
         Thread.sleep(3000);
         driver.findElement(By.xpath(" //*[@id='root']/div/div[2]/div/div/div[1]/ul/li[2]/span")).click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
         dropurl();
 
@@ -81,7 +85,9 @@ public class MakeMyTrip_Steps extends MakemyTrip_Utils {
         gettingListofDepartureandReturnFlights();
 
         //checking non stop and 1 stop options
+        Thread.sleep(3000);
         driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_nonStop')]")).click();
+        Thread.sleep(3000);
         driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).click();
         System.out.println("********************After checking non stop and 1 stop options**********************");
         gettingListofDepartureandReturnFlights();
@@ -97,10 +103,9 @@ public class MakeMyTrip_Steps extends MakemyTrip_Utils {
         driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).click();
         System.out.println("*****************Count after Unchecking 1 stop and getting last flight details***********");
         gettingListofDepartureandReturnFlights();
-        driver.findElement(By.xpath("//*[@id=\"ow-domrt-jrny\"]/div/div[last()]")).click();
-        Thread.sleep(2000);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("window.scrollBy(0,2000)");
+        driver.findElement(By.xpath("//*[@id='ow-domrt-jrny']/div/div[last()]")).click();
+        Thread.sleep(5000);
+        scroll();
         driver.findElement(By.xpath("//*[@id='rt-domrt-jrny']/div/div[last()]")).click();
 
         gettingPrices();
@@ -139,7 +144,7 @@ public class MakeMyTrip_Steps extends MakemyTrip_Utils {
 
         //Down Prices
 
-        WebElement chargesofdownDPFlight = driver.findElement(By.xpath("//*[@id=\"left-side--wrapper\"]/div/div/div[4]/div/div[1]/div/div[1]/div/div[2]/div[4]/p"));
+        WebElement chargesofdownDPFlight = driver.findElement(By.xpath("//*[@id='left-side--wrapper']/div/div/div[4]/div/div[1]/div/div[1]/div/div[2]/div[4]/p"));
         String ss1 = chargesofdownDPFlight.getText();
         ss1 = ss1.replaceAll("[^a-zA-Z0-9]", "");
 
@@ -169,60 +174,6 @@ public class MakeMyTrip_Steps extends MakemyTrip_Utils {
         booking();
     }
 
-    public static void booking() throws InterruptedException {
-        driver.findElement(By.xpath("//*[@class=\"fli_primary_btn text-uppercase \"]")).click();
-        JavascriptExecutor js = ((JavascriptExecutor) driver);
-        js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
-        Thread.sleep(2000);
-        driver.findElement(By.xpath("//label[2]/span")).click();
-        driver.findElement(By.id("review-continue")).click();
-
-        //adding adults
-        driver.findElement(By.xpath("//*[@id=\"wrapper_ADULT\"]/a")).click();
-        driver.findElement(By.xpath("//*[@placeholder=\"First & Middle Name\"]")).sendKeys("Adigarla Narasimha");
-        driver.findElement(By.xpath("//*[@placeholder=\"Last Name\"]")).sendKeys("Murthy");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_bc601132-9148-485d-bba2-b5c5e6ae20de\"]/div[2]/div/div/div[3]/div/div/label[1]")).click();
-        driver.findElement(By.xpath("//*[@id=\"wrapper_ADULT\"]/a")).click();
-        driver.findElement(By.xpath("//*[@placeholder=\"First & Middle Name\"]")).sendKeys("Adigarla Narasimha");
-        driver.findElement(By.xpath("//*[@placeholder=\"Last Name\"]")).sendKeys("Murthy");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_bc601132-9148-485d-bba2-b5c5e6ae20de\"]/div[2]/div/div/div[3]/div/div/label[1]")).click();
-
-
-        //adding child
-        driver.findElement(By.xpath("//*[@id=\"wrapper_CHILD\"]/a")).click();
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_2b339011-eb4f-4e0a-8b82-bb56077313d4\"]/div[2]/div/div/div[1]/div/input")).sendKeys("Adigarla Narasimha");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_2b339011-eb4f-4e0a-8b82-bb56077313d4\"]/div[2]/div/div/div[2]/div/input")).sendKeys("Murthy");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_2b339011-eb4f-4e0a-8b82-bb56077313d4\"]/div[2]/div/div/div[3]/div/div/label[1]")).click();
-        driver.findElement(By.xpath("//*[@id=\"wrapper_CHILD\"]/a")).click();
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_2b339011-eb4f-4e0a-8b82-bb56077313d4\"]/div[2]/div/div/div[1]/div/input")).sendKeys("Adigarla Narasimha");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_2b339011-eb4f-4e0a-8b82-bb56077313d4\"]/div[2]/div/div/div[2]/div/input")).sendKeys("Murthy");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_2b339011-eb4f-4e0a-8b82-bb56077313d4\"]/div[2]/div/div/div[3]/div/div/label[1]")).click();
-
-
-        //adding infant
-        driver.findElement(By.xpath("//*[@id=\"wrapper_INFANT\"]/a")).click();
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_5e44b2f1-1969-44d2-afca-eb26b9850444\"]/div[2]/div/div[1]/div[1]/div/input")).sendKeys("Adigarla Narasimha");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_5e44b2f1-1969-44d2-afca-eb26b9850444\"]/div[2]/div/div[1]/div[2]/div/input")).sendKeys("Murthy");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_5e44b2f1-1969-44d2-afca-eb26b9850444\"]/div[2]/div/div[1]/div[3]/div/div/label[1]")).click();
-        WebElement dd1 = driver.findElement(By.xpath("//*[@class=\"dateDropdown\"]"));
-
-        Select s = new Select(dd1);
-        s.selectByVisibleText("11");
-        s.selectByVisibleText("Dec");
-        s.selectByVisibleText("2019");
-
-        driver.findElement(By.xpath("//*[@id=\"wrapper_INFANT\"]/a")).click();
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_5e44b2f1-1969-44d2-afca-eb26b9850444\"]/div[2]/div/div[1]/div[1]/div/input")).sendKeys("Adigarla Narasimha");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_5e44b2f1-1969-44d2-afca-eb26b9850444\"]/div[2]/div/div[1]/div[2]/div/input")).sendKeys("Murthy");
-        driver.findElement(By.xpath("//*[@id=\"MANUAL_5e44b2f1-1969-44d2-afca-eb26b9850444\"]/div[2]/div/div[1]/div[3]/div/div/label[1]")).click();
-        WebElement dd2 = driver.findElement(By.xpath("//*[@class=\"dateDropdown\"]"));
-
-        Select s2 = new Select(dd2);
-        s2.selectByVisibleText("11");
-        s2.selectByVisibleText("Dec");
-        s2.selectByVisibleText("2019");
-
-
-    }
 
 }
+
