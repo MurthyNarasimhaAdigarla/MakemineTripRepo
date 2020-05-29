@@ -1,9 +1,6 @@
 package utils.com;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 
 import java.util.Iterator;
 import java.util.List;
@@ -74,30 +71,9 @@ public class MakemyTrip_Utils {
         driver.findElement(By.linkText("+ ADD INFANT")).click();
 
 
-
-
-
-        /*WebElement dd1 = driver.findElement(By.xpath("//*[@class=\"dateDropdown\"]"));
-
-        Select s = new Select(dd1);
-        s.selectByVisibleText("11");
-        s.selectByVisibleText("Dec");
-        s.selectByVisibleText("2019");
-*/
-
-       /* WebElement dd2 = driver.findElement(By.xpath("//*[@class=\"dateDropdown\"]"));
-
-        Select s2 = new Select(dd2);
-        s2.selectByVisibleText("11");
-        s2.selectByVisibleText("Dec");
-        s2.selectByVisibleText("2019");*/
-
-
         List<WebElement> firstAdultNames = driver.findElements(By.xpath("//*[@placeholder='First & Middle Name']"));
         List<WebElement> lastAdultNames = driver.findElements(By.xpath("//*[@placeholder='Last Name']"));
-
         List<WebElement> genderButn = driver.findElements(By.xpath("//div/label"));
-
         List<WebElement> dateSelection = driver.findElements(By.xpath("//*[@class=\"dateDropdown\"]"));
 
 
@@ -123,13 +99,18 @@ public class MakemyTrip_Utils {
             lastAdultNames.get(4).sendKeys("MurthyyInfant");
             genderButn.get(8).click();
 
+
             firstAdultNames.get(5).sendKeys("AdigarlaaInfant");
             lastAdultNames.get(5).sendKeys("MurthyyInfant");
             genderButn.get(10).click();
 
+            driver.findElement(By.xpath("//*[contains(@class,'dropdown__value-container')]/div[contains(.,'Date')]/parent::div")).sendKeys("2");
+            driver.findElement(By.xpath("//*[contains(@class,'dropdown__value-container')]/div[contains(.,'Month')]/parent::div")).sendKeys("Mar");
+
+
         }
 
 
-    }
 
-}
+
+}}
