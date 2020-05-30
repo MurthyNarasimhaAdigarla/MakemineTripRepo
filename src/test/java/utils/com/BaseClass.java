@@ -7,7 +7,7 @@ import org.openqa.selenium.WebElement;
 
 import java.util.List;
 
-public class BaseClass extends Test {
+public class BaseClass extends MakemyTrip_Utils {
 
 
     public static WebDriver driver;
@@ -86,11 +86,12 @@ public class BaseClass extends Test {
 
 
     public static void gettingListofDepartureandReturnFlights() {
-        //Printiong departure and returm f;oghts
-        List<WebElement> df = driver.findElements(By.xpath("//*[contains(@for,'split_0')]"));
-        System.out.println("Departure Flights are " + df.size());
-        List<WebElement> rf = driver.findElements(By.xpath("//*[contains(@for,'split_1')]"));
-        System.out.println("Return Flights are " + rf.size());
+        //Printiing departure and return flights
+        System.out.println("Printiing total count of departure and return flights");
+        List<WebElement> count_of_DepartureFlights = driver.findElements(By.xpath("//*[contains(@for,'split_0')]"));
+        System.out.println("Total Departure Flights are " + count_of_DepartureFlights.size());
+        List<WebElement> count_of_ReturnFlights = driver.findElements(By.xpath("//*[contains(@for,'split_1')]"));
+        System.out.println("Total Return Flights are " + count_of_ReturnFlights.size());
     }
 
 

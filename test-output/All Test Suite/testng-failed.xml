@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [All Test Suite]">
+  <test name="E:/MakeMyTrip(failed)">
+    <classes>
+      <class name="stepdefs.com.MakeMyTrip_Steps">
+        <methods>
+          <include name="entering_Flights_Names"/>
+          <include name="booking"/>
+          <include name="verifing_Prices"/>
+          <include name="closeBrowser"/>
+          <include name="selecting_PassengersCount"/>
+          <include name="opening_MakeMyTrip_Site"/>
+        </methods>
+      </class> <!-- stepdefs.com.MakeMyTrip_Steps -->
+    </classes>
+  </test> <!-- E:/MakeMyTrip(failed) -->
+</suite> <!-- Failed suite [All Test Suite] -->
