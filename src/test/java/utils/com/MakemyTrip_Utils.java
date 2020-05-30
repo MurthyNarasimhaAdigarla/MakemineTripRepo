@@ -1,116 +1,182 @@
+/*
 package utils.com;
 
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
-public class MakemyTrip_Utils {
+import static stepdefs.com.MakeMyTrip_Steps.Unchecking_1_stop_and_getting_last_flight_details;
+import static stepdefs.com.MakeMyTrip_Steps.gettingListofDepartureandReturnFlights;
 
-    public static WebDriver driver;
+public class MakemyTrip_Utils  {
 
-    public static void scroll() {
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollBy(0,480)");
+
+
+
+
+    public void login() throws InterruptedException {
+        System.setProperty("webdriver.chrome.driver", "src/test/java/chromedriver.exe");
+        driver = new ChromeDriver();
+
+       */
+/* System.setProperty("webdriver.gecko.driver",
+                "src/test/java/geckodriver.exe");
+        driver = new FirefoxDriver();*//*
+
+
+        driver.get("https://www.makemytrip.com/");
+        driver.manage().window().maximize();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath("//*[@id='SW']/div[2]/div[2]/div/div/nav/ul/li[1]/a/span[2]")).click();
+        Thread.sleep(3000);
+        driver.findElement(By.xpath(" //*[@id='root']/div/div[2]/div/div/div[1]/ul/li[2]/span")).click();
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 
     }
 
-    public static void booking() throws InterruptedException {
+    public void dropurl() throws InterruptedException {
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
 
-
+        driver.findElement(By.id("fromCity")).click();
+        WebElement f = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[1]/div[1]/div/div/div/input"));
+        //f.click();
+        //*[@id="root"]/div/div[2]/div/div/div[2]/div[1]/div[1]/div[1]/div/div/div/input
+        f.sendKeys("Chennai");
         Thread.sleep(2000);
-        driver.findElement(By.xpath("//*[@class='fli_primary_btn text-uppercase ']")).click();
-        Thread.sleep(5000);
+        f.sendKeys(Keys.ARROW_DOWN);
+        f.sendKeys(Keys.ENTER);
+        Thread.sleep(2000);
+        //f.sendKeys(Keys.TAB);
 
-        //Check box
+        //driver.findElement(By.id("toCity")).click();
+        WebElement t = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/div/div/div/input"));
+        Thread.sleep(2000);
+        t.sendKeys("Hyderabad");
+        Thread.sleep(2000);
+        t.sendKeys(Keys.ARROW_DOWN);
+        t.sendKeys(Keys.ENTER);
 
-        Set<String> handles = driver.getWindowHandles();
-        Iterator<String> it = handles.iterator();
-//iterate through your windows
-        while (it.hasNext()) {
-            String parent = it.next();
-            String newwin = it.next();
-            driver.switchTo().window(newwin);
-//perform actions on new window
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[3]/label/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[2]/div[1]/div[3]/div[5]/div[7]/div")).click();
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[2]/div[2]/div[3]/div[1]/div[7]/div")).click();
+
+        //Selecting people
+
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/label/span")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/div/ul[1]/li[2]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/div/div/div[1]/ul/li[3]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/div/div/div[2]/ul/li[3]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/button")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/p/a")).click();
 
 
-        }
-        JavascriptExecutor jse = (JavascriptExecutor) driver;
-        jse.executeScript("window.scrollBy(0,950)");
+        //Printiong departure and returm f;oghts
+        System.out.println("********************Before checking non stop and 1 stop options**********************");
+        gettingListofDepartureandReturnFlights();
 
-       /* WebElement oldInsuranceBtn = driver.findElement(By.xpath("(//input[@value='no'])[2]"));
-
-
-        if (oldInsuranceBtn.isDisplayed())
-            oldInsuranceBtn.click();
-        else {
-            WebElement newInsuranceBtn = driver.findElement(By.xpath("//*[@id='insurance-section']/div/div[3]/label[1]/input"));
-            newInsuranceBtn.click();
-
-        }*/
-        WebElement newInsuranceBtn = driver.findElement(By.xpath("//*[@id='insurance-section']/div/div[3]/label[1]/input"));
-        newInsuranceBtn.click();
-
+        //checking non stop and 1 stop options
         Thread.sleep(3000);
-        driver.findElement(By.xpath("//*[@id='review-continue']")).click();
+        driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_nonStop')]")).click();
         Thread.sleep(3000);
 
 
-        //adding adults
-        driver.findElement(By.linkText("+ ADD ADULT")).click();
+       */
+/* if (driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).isDisplayed()) {
+            driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).click();
+
+        }*//*
+
+
+        System.out.println("********************After checking non stop and 1 stop options**********************");
+        gettingListofDepartureandReturnFlights();
+
+
+        Unchecking_1_stop_and_getting_last_flight_details();
+
+
+    }
+
+    public void enteringFlights() throws InterruptedException {
+        driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+
+        driver.findElement(By.id("fromCity")).click();
+        WebElement f = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[1]/div[1]/div/div/div/input"));
+        //f.click();
+        //*[@id="root"]/div/div[2]/div/div/div[2]/div[1]/div[1]/div[1]/div/div/div/input
+        f.sendKeys("Chennai");
+        Thread.sleep(2000);
+        f.sendKeys(Keys.ARROW_DOWN);
+        f.sendKeys(Keys.ENTER);
+        Thread.sleep(2000);
+        //f.sendKeys(Keys.TAB);
+
+        //driver.findElement(By.id("toCity")).click();
+        WebElement t = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[2]/div[1]/div/div/div/input"));
+        Thread.sleep(2000);
+        t.sendKeys("Hyderabad");
+        Thread.sleep(2000);
+        t.sendKeys(Keys.ARROW_DOWN);
+        t.sendKeys(Keys.ENTER);
+
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[3]/label/span")).click();
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[2]/div[1]/div[3]/div[5]/div[7]/div")).click();
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[3]/div[1]/div/div/div/div[2]/div/div[2]/div[2]/div[3]/div[1]/div[7]/div")).click();
+
+        //Selecting people
+
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/label/span")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/div/ul[1]/li[2]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/div/div/div[1]/ul/li[3]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/div/div/div[2]/ul/li[3]")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/div[1]/div[5]/div[1]/button")).click();
+        Thread.sleep(2000);
+        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div/div/div[2]/p/a")).click();
+
+
+        //Printiong departure and returm f;oghts
+        System.out.println("********************Before checking non stop and 1 stop options**********************");
+        gettingListofDepartureandReturnFlights();
+
+        //checking non stop and 1 stop options
         Thread.sleep(3000);
-        driver.findElement(By.linkText("+ ADD ADULT")).click();
+        driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_nonStop')]")).click();
         Thread.sleep(3000);
-        driver.findElement(By.linkText("+ ADD CHILD")).click();
-        Thread.sleep(3000);
-        driver.findElement(By.linkText("+ ADD CHILD")).click();
-        Thread.sleep(3000);
-        driver.findElement(By.linkText("+ ADD INFANT")).click();
-        Thread.sleep(3000);
-        driver.findElement(By.linkText("+ ADD INFANT")).click();
 
 
-        List<WebElement> firstAdultNames = driver.findElements(By.xpath("//*[@placeholder='First & Middle Name']"));
-        List<WebElement> lastAdultNames = driver.findElements(By.xpath("//*[@placeholder='Last Name']"));
-        List<WebElement> genderButn = driver.findElements(By.xpath("//div/label"));
-        List<WebElement> dateSelection = driver.findElements(By.xpath("//*[@class=\"dateDropdown\"]"));
+       */
+/* if (driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).isDisplayed()) {
+            driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).click();
+
+        }*//*
 
 
-        for (int i = 0; i < 1; i++) {
-
-            firstAdultNames.get(0).sendKeys("Adigarla");
-            lastAdultNames.get(0).sendKeys("Murthy");
-            genderButn.get(0).click();
+        System.out.println("********************After checking non stop and 1 stop options**********************");
+        gettingListofDepartureandReturnFlights();
 
 
-            firstAdultNames.get(1).sendKeys("Adigarlaa");
-            lastAdultNames.get(1).sendKeys("Murthyy");
-            genderButn.get(2).click();
-
-            firstAdultNames.get(2).sendKeys("AdigarlaChild");
-            lastAdultNames.get(2).sendKeys("MurthyChild");
-            genderButn.get(4).click();
-            firstAdultNames.get(3).sendKeys("AdigarlaaChild");
-            lastAdultNames.get(3).sendKeys("MurthyyChild");
-            genderButn.get(6).click();
-
-            firstAdultNames.get(4).sendKeys("AdigarlaaInfant");
-            lastAdultNames.get(4).sendKeys("MurthyyInfant");
-            genderButn.get(8).click();
+        Unchecking_1_stop_and_getting_last_flight_details();
 
 
-            firstAdultNames.get(5).sendKeys("AdigarlaaInfant");
-            lastAdultNames.get(5).sendKeys("MurthyyInfant");
-            genderButn.get(10).click();
-
-            driver.findElement(By.xpath("//*[contains(@class,'dropdown__value-container')]/div[contains(.,'Date')]/parent::div")).sendKeys("2");
-            driver.findElement(By.xpath("//*[contains(@class,'dropdown__value-container')]/div[contains(.,'Month')]/parent::div")).sendKeys("Mar");
-
-
-        }
+    }
 
 
 
 
-}}
+    }
+}*/

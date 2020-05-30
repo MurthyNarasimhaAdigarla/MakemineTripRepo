@@ -4,32 +4,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.awt.*;
 import java.util.List;
 
-public class DropDownClass extends MakemyTrip_Utils {
+public class BaseClass extends Test {
 
 
     public static WebDriver driver;
 
-    public static void main(String[] args) throws InterruptedException, AWTException {
-        System.setProperty("webdriver.chrome.driver", "src/test/java/chromedriver.exe");
-        driver = new ChromeDriver();
-
-
-        driver.get("https://www.makemytrip.com/flight/traveller/?itineraryId=a30d4bd55c00f472972c05c99073c60b31cb95ee&crId=73f04477-b5d3-4d7f-841e-324e865bfc13&cur=INR");
-
-        driver.manage().window().maximize();
+    public static void scroll() {
         JavascriptExecutor jse = (JavascriptExecutor) driver;
         jse.executeScript("window.scrollBy(0,600)");
-        driver.findElement(By.linkText("+ ADD INFANT")).click();
-        Thread.sleep(2000);
-
-        date("11");
-        month("Dec");
-        year("2019");
 
     }
 
@@ -67,7 +52,7 @@ public class DropDownClass extends MakemyTrip_Utils {
 
     }
 
-    public static void year(String yearName) {
+    public static void year(String yearName) throws InterruptedException {
 
         driver.findElement(By.xpath("//*[@class=\"dropdown__placeholder css-1wa3eu0-placeholder\"][contains(.,'Year')]")).click();
         List<WebElement> dd = driver.findElements(By.xpath("//*[@class=\"dropdown__menu-list css-11unzgr\"]//div"));
@@ -81,9 +66,36 @@ public class DropDownClass extends MakemyTrip_Utils {
                 break;
             }
         }
+    }
 
+
+    public static void Unchecking_1_stop_and_getting_last_flight_details() throws InterruptedException {
+        //Unchecking 1 stop and getting last flight details
+        // driver.findElement(By.xpath("//*[contains(@data-filtertext,'collapsed_stop_oneStop')]")).click();
+        System.out.println("*****************Count after Unchecking 1 stop and getting last flight details***********");
+        gettingListofDepartureandReturnFlights();
+        driver.findElement(By.xpath("//*[@id='ow-domrt-jrny']/div/div[last()]")).click();
+        Thread.sleep(5000);
+        scroll();
+        Thread.sleep(5000);
+        driver.findElement(By.xpath("//*[@id='rt-domrt-jrny']/div/div[last()]")).click();
+
+        verifing_Prices();
 
     }
 
 
+    public static void gettingListofDepartureandReturnFlights() {
+        //Printiong departure and returm f;oghts
+        List<WebElement> df = driver.findElements(By.xpath("//*[contains(@for,'split_0')]"));
+        System.out.println("Departure Flights are " + df.size());
+        List<WebElement> rf = driver.findElements(By.xpath("//*[contains(@for,'split_1')]"));
+        System.out.println("Return Flights are " + rf.size());
+    }
+
+
 }
+
+
+
+
