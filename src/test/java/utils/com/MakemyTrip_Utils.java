@@ -189,6 +189,7 @@ public class MakemyTrip_Utils {
             firstAdultNames.get(2).sendKeys("AdigarlaChild");
             lastAdultNames.get(2).sendKeys("MurthyChild");
             genderButn.get(4).click();
+
             firstAdultNames.get(3).sendKeys("AdigarlaaChild");
             lastAdultNames.get(3).sendKeys("MurthyyChild");
             genderButn.get(6).click();
